@@ -26,6 +26,6 @@ assert util.pocketsphinx_available()
 if options.media_filename and options.subtitles_filename:
 	process_files.process_files(options.media_filename, options.subtitles_filename)
 else:
-	print "Usage"
+	print "Usage: shayari.py -m MEDIAFILE -s SUBTITLEFILE"
 
 
