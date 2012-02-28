@@ -23,9 +23,9 @@ parser.add_option("-s", "--subfile", dest="subtitles_filename", help="Output sub
 #print options.subtitles_filename
 assert util.gst_available()
 assert util.pocketsphinx_available()
-if(options.media_filename && options.subtitles_filename)
+if options.media_filename and options.subtitles_filename:
 	process_files.process_files(options.media_filename, options.subtitles_filename)
-else
+else:
 	print "Usage"
 
 
