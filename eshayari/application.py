@@ -38,3 +38,12 @@ class Application():
 		struct.set_value('hyp', text)
 		struct.set_value('uttid', uttid)
 		asr.post_message(gst.message_new_application(asr, struct))
+		
+	def application_message(self, bus, msg):
+		"""Receive application messages from the bus."""
+		msgtype = msg.structure.get_name()
+		if msgtype == 'partial_result':
+			self.partial_result(msg.structure['hyp'], msg.structure['uttid'])
+		elif msgtype == 'result':
+			self.final_result(msg.structure['hyp'], msg.structure['uttid'])
+			self.pipeline.set_state(gst.STATE_PAUSED)
