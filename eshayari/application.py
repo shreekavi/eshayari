@@ -79,9 +79,9 @@ class Application():
 	def _get_pocketsphinx_definition(self):
 		"""Return ``pocketsphinx`` definition for :func:`gst.parse_launch`."""
 		definition = "! pocketsphinx name=pocketsphinx "
-		acoustic_model_file = ""
-		dictionary_file= ""
-		language_file = ""
+		acoustic_model_file = None
+		dictionary_file= None
+		language_file = None
 		return definition + 'hmm="%s" dict="%s" lm="%s" ' % (
 						            acoustic_model_file,
 						            dictionary_file,
