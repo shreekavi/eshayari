@@ -31,3 +31,10 @@ class Application():
 		struct.set_value('hyp', text)
 		struct.set_value('uttid', uttid)
 		asr.post_message(gst.message_new_application(asr, struct))
+		
+	def asr_result(self, asr, text, uttid):
+		"""Forward result signals on the bus to the main thread."""
+		struct = gst.Structure('result')
+		struct.set_value('hyp', text)
+		struct.set_value('uttid', uttid)
+		asr.post_message(gst.message_new_application(asr, struct))
