@@ -14,6 +14,12 @@ class Application():
 	
 	def init_gst(self):
 		self._pipeline = gst.parse_launch(self._get_pipeline_definition())
+		vader = self._pipeline.get_by_name("vader")
+		vader.connect("vader-start", self._on_vader_start)
+		vader.connect("vader-stop", self._on_vader_stop)
+		sphinx = self._pipeline.get_by_name("pocketsphinx")
+		sphinx.connect("result", self._on_pocketsphinx_result)
+		sphinx.set_property("configured", True)
 		
 	def _get_pipeline_definition(self):
 		"""Return pipeline definition for :func:`gst.parse_launch`."""
