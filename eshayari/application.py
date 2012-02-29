@@ -28,7 +28,7 @@ class Application():
 	
 	def _get_filesrc_definition(self):
 		"""Return ``filesrc`` definition for :func:`gst.parse_launch`."""
-		return 'filesrc location="%s" ' % path
+		return 'filesrc location=some.avi '
 	
 		
 	def init_gst_bkp(self):
