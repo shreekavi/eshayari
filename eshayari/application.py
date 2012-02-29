@@ -82,10 +82,11 @@ class Application():
 		acoustic_model_file = None
 		dictionary_file= None
 		language_file = None
-		return definition + 'hmm="%s" dict="%s" lm="%s" ' % (
-						            acoustic_model_file,
-						            dictionary_file,
-						            language_file)
+		return definition
+		#return definition + 'hmm="%s" dict="%s" lm="%s" ' % (
+		#				            acoustic_model_file,
+		#				            dictionary_file,
+		#				            language_file)
 		
 	def init_gst_bkp(self):
 		self.pipeline = gst.parse_launch('gconfaudiosrc ! audioconvert ! audioresample '
