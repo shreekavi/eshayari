@@ -1,16 +1,37 @@
 import gst
 class Application():
 	
-	def __init__(self):
+	def __init__(self, mediafile, subtitlesfile):
 		self._pipeline = None
 		self.init_gst()
+		self.mediafile = mediafile
+		self.subtitlesfile= subtitlesfile
 	
-	def speech_recognition(self,mediafile, subtitlesfile):
+	def speech_recognition(self):
 		print "Inside Speech Recognition"
-		print mediafile
-		print subtitlesfile
-		
+		print self.mediafile
+		print self.subtitlesfile
+	
 	def init_gst(self):
+		self._pipeline = gst.parse_launch(self._get_pipeline_definition())
+		
+	def _get_pipeline_definition(self):
+		"""Return pipeline definition for :func:`gst.parse_launch`."""
+		return (self._get_filesrc_definition()
+		                + "! decodebin2 "
+		                + "! audioconvert "
+		                + "! audioresample "
+		                + self._get_vader_definition()
+		                + self._get_pocketsphinx_definition()
+		                + "! fakesink"
+		                )
+	
+	def _get_filesrc_definition(self):
+		"""Return ``filesrc`` definition for :func:`gst.parse_launch`."""
+		return 'filesrc location="%s" ' % path
+	
+		
+	def init_gst_bkp(self):
 		self.pipeline = gst.parse_launch('gconfaudiosrc ! audioconvert ! audioresample '
 		                                         + '! vader name=vad auto-threshold=true '
 		                                         + '! pocketsphinx name=asr ! fakesink')

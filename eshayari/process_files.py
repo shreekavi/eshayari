@@ -5,8 +5,8 @@ def _process_files(mediafile, subtitlesfile):
 	print "Media File --> " + mediafile
 	print "Subtitles File -->"  + subtitlesfile
 	
-	application = Application()
-	application.speech_recognition(mediafile,subtitlesfile)
+	application = Application(mediafile, subtitlesfile)
+	application.speech_recognition()
 	#method to call and create subtitles
 	#create_subtitles(subtitlesfile)
 
