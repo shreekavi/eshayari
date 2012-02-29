@@ -28,7 +28,21 @@ class Application():
 	
 	def _get_filesrc_definition(self):
 		"""Return ``filesrc`` definition for :func:`gst.parse_launch`."""
-		return 'filesrc location=some.avi '
+		return 'filesrc location=some.avi'
+		
+	def _get_vader_definition(self):
+		"""Return ``vader`` definition for :func:`gst.parse_launch`."""
+		# Convert noise level from spin button range [0,32768] to gstreamer
+		# element's range [0,1]. Likewise, convert silence from spin button's
+		# milliseconds to gstreamer element's nanoseconds.
+		noise = 256 / 32768
+		silence = 300 * 1000000
+		return ("! vader "
+		                + "name=vader "
+		                + "auto-threshold=false "
+		                + "threshold=%.9f " % noise
+		                + "run-length=%d " % silence
+		                )
 	
 		
 	def init_gst_bkp(self):
