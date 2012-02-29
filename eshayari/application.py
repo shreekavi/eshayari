@@ -20,6 +20,24 @@ class Application():
 		sphinx = self._pipeline.get_by_name("pocketsphinx")
 		sphinx.connect("result", self._on_pocketsphinx_result)
 		sphinx.set_property("configured", True)
+	
+	
+	def _on_vader_start(self, vader, pos):
+		"""Send start position as a message on the bus."""
+		import gst
+		struct = gst.Structure("start")
+		pos = pos / 1000000000 # ns to s
+		struct.set_value("start", pos)
+		vader.post_message(gst.message_new_application(vader, struct))
+
+	def _on_vader_stop(self, vader, pos):
+		"""Send stop position as a message on the bus."""
+		import gst
+		struct = gst.Structure("stop")
+		pos = pos / 1000000000 # ns to s
+		struct.set_value("stop", pos)
+		vader.post_message(gst.message_new_application(vader, struct))
+	
 		
 	def _get_pipeline_definition(self):
 		"""Return pipeline definition for :func:`gst.parse_launch`."""
