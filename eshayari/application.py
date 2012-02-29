@@ -50,8 +50,6 @@ class Application():
 		acoustic_model_file = ""
 		dictionary_file= ""
 		language_file = ""
-		if self._default_model_check.get_active():
-			return definition
 		return definition + 'hmm="%s" dict="%s" lm="%s" ' % (
 						            acoustic_model_file,
 						            dictionary_file,
