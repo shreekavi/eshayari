@@ -12,8 +12,8 @@ def main(args):
 	(options, args) = _parse_args(args)
 	
 	import util
-	assert util.gst_available()
-	assert util.pocketsphinx_available()
+	#assert util.gst_available()
+	#assert util.pocketsphinx_available()
 	
 	if options.media_filename and options.subtitles_filename:
 		import process_files

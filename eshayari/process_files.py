@@ -1,10 +1,15 @@
+from application import Application
+
 def _process_files(mediafile, subtitlesfile):
 	print "Processing the files now .." 
 	print "Media File --> " + mediafile
 	print "Subtitles File -->"  + subtitlesfile
+	
+	application = Application()
+	application.speech_recognition(mediafile,subtitlesfile)
 	#method to call and create subtitles
 	#create_subtitles(subtitlesfile)
-	#_recognise_speech(self)
+
 
 
 def create_subtitles(file_name):
@@ -32,5 +37,3 @@ def create_subtitles(file_name):
 	FILE.close()
 	print "Output created in " + file_name
 
-def _recognise_speech(self):
-	print "Inside recognise speech"
