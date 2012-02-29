@@ -44,6 +44,18 @@ class Application():
 		                + "run-length=%d " % silence
 		                )
 	
+	def _get_pocketsphinx_definition(self):
+		"""Return ``pocketsphinx`` definition for :func:`gst.parse_launch`."""
+		definition = "! pocketsphinx name=pocketsphinx "
+		acoustic_model_file = ""
+		dictionary_file= ""
+		language_file = ""
+		if self._default_model_check.get_active():
+			return definition
+		return definition + 'hmm="%s" dict="%s" lm="%s" ' % (
+						            acoustic_model_file,
+						            dictionary_file,
+						            language_file)
 		
 	def init_gst_bkp(self):
 		self.pipeline = gst.parse_launch('gconfaudiosrc ! audioconvert ! audioresample '
