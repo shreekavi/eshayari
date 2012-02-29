@@ -24,3 +24,10 @@ class Application():
 		bus.connect('message::application', self.application_message)
 
 		self.pipeline.set_state(gst.STATE_PAUSED)
+		
+	def asr_partial_result(self, asr, text, uttid):
+		"""Forward partial result signals on the bus to the main thread."""
+		struct = gst.Structure('partial_result')
+		struct.set_value('hyp', text)
+		struct.set_value('uttid', uttid)
+		asr.post_message(gst.message_new_application(asr, struct))
