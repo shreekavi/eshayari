@@ -37,6 +37,14 @@ class Application():
 		pos = pos / 1000000000 # ns to s
 		struct.set_value("stop", pos)
 		vader.post_message(gst.message_new_application(vader, struct))
+		
+	def _on_pocketsphinx_result(self, sphinx, text, uttid):
+		"""Send recognized text as a message on the bus."""
+		import gst
+		struct = gst.Structure("text")
+		struct.set_value("text", text)
+		struct.set_value("uttid", uttid)
+		sphinx.post_message(gst.message_new_application(sphinx, struct))
 	
 		
 	def _get_pipeline_definition(self):
