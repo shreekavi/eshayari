@@ -143,6 +143,7 @@ class Application():
 			if not isinstance(text, unicode):
 				text = unicode(text, errors="replace")
 			self._text = text
+		FILE.close()
 		
 	def _on_bus_message_eos(self, bus, message):
 		"""Flush remaining subtitles to page."""
