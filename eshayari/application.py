@@ -3,6 +3,10 @@ class Application():
 	
 	def __init__(self, mediafile, subtitlesfile):
 		self._pipeline = None
+		self._starts = []
+		self._stops = []
+		self._text = None
+		self._texts = []
 		self.init_gst()
 		self.mediafile = mediafile
 		self.subtitlesfile= subtitlesfile
@@ -98,8 +102,31 @@ class Application():
 		"""Process application messages from the bus."""
 		import gst
 		name = message.structure.get_name()
-		print "Inside Bus message Application ================================================================================>"
+	
 		print name
+		if name == "start":
+			start = message.structure["start"]
+			self._starts.append(start)
+			if self._text is not None:
+				# Store previous text.
+				self._texts[-1] = self._text
+				self._text = None
+			self._stops.append(None)
+			self._texts.append(None)
+			duration = self._pipeline.query_duration(gst.FORMAT_TIME, None)[0]
+			duration = duration / 1000000000 # ns to s
+			fraction = start / duration
+			if len(self._starts) > 1:
+				# Append previous subtitle to page.
+				self._append_subtitle(-2)
+		if name == "stop":
+			stop = message.structure["stop"]
+			self._stops[-1] = stop
+		if name == "text":
+			text = message.structure["text"]
+			if not isinstance(text, unicode):
+				text = unicode(text, errors="replace")
+			self._text = text
 		
 	def _on_bus_message_eos(self, bus, message):
 		"""Flush remaining subtitles to page."""
