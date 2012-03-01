@@ -1,6 +1,6 @@
 import gobject
 import pygst
-glib.threads_init()
+gobject.threads_init()
 import gst
 import logging
 
