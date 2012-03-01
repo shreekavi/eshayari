@@ -115,7 +115,11 @@ class Application():
 		import gst
 		name = message.structure.get_name()
 		logger.info( "Inside Bus Message Application")
-		print name
+		FILE = open("debug.txt","w")
+
+		#this block has to get inputs from gstreamer-pocketsphinx
+		#subtitle number
+		FILE.writelines(name)
 		if name == "start":
 			start = message.structure["start"]
 			self._starts.append(start)
