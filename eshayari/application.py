@@ -1,5 +1,9 @@
+import gobject
+import pygst
+glib.threads_init()
 import gst
 import logging
+
 class Application():
 	
 	def __init__(self, mediafile, subtitlesfile):
