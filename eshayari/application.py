@@ -24,7 +24,7 @@ class Application():
 		bus.add_signal_watch()
 		bus.connect("message::application", self._on_bus_message_application)
 		bus.connect("message::eos", self._on_bus_message_eos)
-		self._prepare_page()
+		self._prepare_output()
 		self._pipeline.set_state(gst.STATE_PLAYING)
 	
 	
