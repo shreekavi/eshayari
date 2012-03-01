@@ -13,7 +13,7 @@ class Application():
 		self.subtitlesfile= subtitlesfile
 		logger = logging.getLogger("eshayari")
 		logger.setLevel(logging.DEBUG)
-		ch = logger.StreamHandler()
+		ch = logging.StreamHandler()
 		logger.addHandler(ch)
 	
 	def speech_recognition(self):
