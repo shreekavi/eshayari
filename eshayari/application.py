@@ -130,6 +130,13 @@ class Application():
 		
 	def _on_bus_message_eos(self, bus, message):
 		"""Flush remaining subtitles to page."""
+		if self._text is not None:
+			# Store previous text.
+			self._texts[-1] = self._text
+			self._text = None
+		if self._starts and self._stops[-1] is not None:
+			self._append_subtitle(-1)
+			self._stop_speech_recognition()
 		
 	def _prepare_output(self):
 		"""Prepare the output in SubRip format"""
