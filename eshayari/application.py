@@ -24,7 +24,7 @@ class Application():
 		bus.add_signal_watch()
 		bus.connect("message::application", self._on_bus_message_application)
 		bus.connect("message::eos", self._on_bus_message_eos)
-		self._prepare_output()
+		self._prepare_output	()
 		self._pipeline.set_state(gst.STATE_PLAYING)
 	
 	
@@ -98,7 +98,8 @@ class Application():
 		"""Process application messages from the bus."""
 		import gst
 		name = message.structure.get_name()
-		print "Inside Bus message Application"
+		print "Inside Bus message Application ================================================================================>"
+		print name
 		
 	def _on_bus_message_eos(self, bus, message):
 		"""Flush remaining subtitles to page."""
