@@ -20,6 +20,12 @@ class Application():
 		sphinx = self._pipeline.get_by_name("pocketsphinx")
 		sphinx.connect("result", self._on_pocketsphinx_result)
 		sphinx.set_property("configured", True)
+		bus = self._pipeline.get_bus()
+		bus.add_signal_watch()
+		bus.connect("message::application", self._on_bus_message_application)
+		bus.connect("message::eos", self._on_bus_message_eos)
+		self._prepare_page()
+		self._pipeline.set_state(gst.STATE_PLAYING)
 	
 	
 	def _on_vader_start(self, vader, pos):
@@ -87,41 +93,9 @@ class Application():
 						            acoustic_model_file,
 						            dictionary_file,
 						            language_file)
-		
-	def init_gst_bkp(self):
-		self.pipeline = gst.parse_launch('gconfaudiosrc ! audioconvert ! audioresample '
-		                                         + '! vader name=vad auto-threshold=true '
-		                                         + '! pocketsphinx name=asr ! fakesink')
-		asr = self.pipeline.get_by_name('asr')
-		asr.connect('partial_result', self.asr_partial_result)
-		asr.connect('result', self.asr_result)
-		asr.set_property('configured', True)
-
-		bus = self.pipeline.get_bus()
-		bus.add_signal_watch()
-		bus.connect('message::application', self.application_message)
-
-		self.pipeline.set_state(gst.STATE_PAUSED)
-		
-	def asr_partial_result(self, asr, text, uttid):
-		"""Forward partial result signals on the bus to the main thread."""
-		struct = gst.Structure('partial_result')
-		struct.set_value('hyp', text)
-		struct.set_value('uttid', uttid)
-		asr.post_message(gst.message_new_application(asr, struct))
-		
-	def asr_result(self, asr, text, uttid):
-		"""Forward result signals on the bus to the main thread."""
-		struct = gst.Structure('result')
-		struct.set_value('hyp', text)
-		struct.set_value('uttid', uttid)
-		asr.post_message(gst.message_new_application(asr, struct))
-		
-	def application_message(self, bus, msg):
-		"""Receive application messages from the bus."""
-		msgtype = msg.structure.get_name()
-		if msgtype == 'partial_result':
-			self.partial_result(msg.structure['hyp'], msg.structure['uttid'])
-		elif msgtype == 'result':
-			self.final_result(msg.structure['hyp'], msg.structure['uttid'])
-			self.pipeline.set_state(gst.STATE_PAUSED)
+	
+	def _on_bus_message_application(self, bus, message):
+		"""Process application messages from the bus."""
+		import gst
+		name = message.structure.get_name()
+		print "Inside Bus message Application"
