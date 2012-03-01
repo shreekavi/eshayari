@@ -99,3 +99,6 @@ class Application():
 		import gst
 		name = message.structure.get_name()
 		print "Inside Bus message Application"
+		
+	def _on_bus_message_eos(self, bus, message):
+		"""Flush remaining subtitles to page."""
