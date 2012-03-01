@@ -1,4 +1,5 @@
 import gst
+import logging
 class Application():
 	
 	def __init__(self, mediafile, subtitlesfile):
@@ -10,6 +11,10 @@ class Application():
 		self.init_gst()
 		self.mediafile = mediafile
 		self.subtitlesfile= subtitlesfile
+		logger = logging.getLogger("eshayari")
+		logger.setLevel(logging.DEBUG)
+		ch = logger.StreamHandler()
+		logger.addHandler(ch)
 	
 	def speech_recognition(self):
 		print "Inside Speech Recognition"
@@ -105,7 +110,7 @@ class Application():
 		"""Process application messages from the bus."""
 		import gst
 		name = message.structure.get_name()
-		print "Inside Bus Message Application"
+		logger.info( "Inside Bus Message Application")
 		print name
 		if name == "start":
 			start = message.structure["start"]
