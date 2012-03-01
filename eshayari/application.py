@@ -24,11 +24,13 @@ class Application():
 		sphinx = self._pipeline.get_by_name("pocketsphinx")
 		sphinx.connect("result", self._on_pocketsphinx_result)
 		sphinx.set_property("configured", True)
+		print "Initializing Bus -------->"
 		bus = self._pipeline.get_bus()
 		bus.add_signal_watch()
+		print "Seing Message to Bus ---------->"
 		bus.connect("message::application", self._on_bus_message_application)
 		bus.connect("message::eos", self._on_bus_message_eos)
-		self._prepare_output	()
+		self._prepare_output()
 		self._pipeline.set_state(gst.STATE_PLAYING)
 	
 	
