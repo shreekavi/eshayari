@@ -152,3 +152,5 @@ class Application():
 		
 	def _prepare_output(self):
 		"""Prepare the output in SubRip format"""
+		import process_files
+		process_files.create_titles(self.subtitlesfile)
