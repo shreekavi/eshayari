@@ -102,3 +102,6 @@ class Application():
 		
 	def _on_bus_message_eos(self, bus, message):
 		"""Flush remaining subtitles to page."""
+		
+	def _prepare_output(self):
+		"""Prepare the output in SubRip format"""
