@@ -27,8 +27,9 @@ class Application():
 		print "Initializing Bus -------->"
 		bus = self._pipeline.get_bus()
 		bus.add_signal_watch()
-		print "Seing Message to Bus ---------->"
+		print "Sending Message to Bus ---------->"
 		bus.connect("message::application", self._on_bus_message_application)
+		print "After Message to Bus ----------->"
 		bus.connect("message::eos", self._on_bus_message_eos)
 		self._prepare_output()
 		self._pipeline.set_state(gst.STATE_PLAYING)
@@ -104,7 +105,7 @@ class Application():
 		"""Process application messages from the bus."""
 		import gst
 		name = message.structure.get_name()
-	
+	    print "Inside Bus Message Application"
 		print name
 		if name == "start":
 			start = message.structure["start"]
