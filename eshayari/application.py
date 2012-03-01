@@ -105,7 +105,7 @@ class Application():
 		"""Process application messages from the bus."""
 		import gst
 		name = message.structure.get_name()
-	    print "Inside Bus Message Application"
+		print "Inside Bus Message Application"
 		print name
 		if name == "start":
 			start = message.structure["start"]
